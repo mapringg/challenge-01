@@ -1,41 +1,16 @@
-import { queryClient, trpc } from "@/utils/trpc";
-
-const TITLE_TEXT = `
- ██████╗ ███████╗████████╗████████╗███████╗██████╗
- ██╔══██╗██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
- ██████╔╝█████╗     ██║      ██║   █████╗  ██████╔╝
- ██╔══██╗██╔══╝     ██║      ██║   ██╔══╝  ██╔══██╗
- ██████╔╝███████╗   ██║      ██║   ███████╗██║  ██║
- ╚═════╝ ╚══════╝   ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝
-
- ████████╗    ███████╗████████╗ █████╗  ██████╗██╗  ██╗
- ╚══██╔══╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝
-    ██║       ███████╗   ██║   ███████║██║     █████╔╝
-    ██║       ╚════██║   ██║   ██╔══██║██║     ██╔═██╗
-    ██║       ███████║   ██║   ██║  ██║╚██████╗██║  ██╗
-    ╚═╝       ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
- `;
+import { ProductStats } from "@/app/_components/stat";
+import { caller } from "@/lib/trpc/server";
+import { ProductsTable } from "./_components/table";
 
 export default async function Home() {
-	const data = await queryClient.fetchQuery(trpc.healthCheck.queryOptions());
+	const { products } = await caller.getAllProducts();
+	const { stats } = await caller.getLatestProductStats();
 
 	return (
-		<div className="container mx-auto max-w-3xl px-4 py-2">
-			<pre className="overflow-x-auto font-mono text-sm">{TITLE_TEXT}</pre>
+		<div className="container mx-auto px-4 py-8">
 			<div className="grid gap-6">
-				<section className="rounded-lg border p-4">
-					<h2 className="mb-2 font-medium">API Status</h2>
-					<div className="flex items-center gap-2">
-						<div
-							className={`h-2 w-2 rounded-full ${
-								data ? "bg-green-500" : "bg-red-500"
-							}`}
-						/>
-						<span className="text-muted-foreground text-sm">
-							{data ? "Connected" : "Disconnected"}
-						</span>
-					</div>
-				</section>
+				<ProductStats stats={stats} />
+				<ProductsTable products={products} />
 			</div>
 		</div>
 	);

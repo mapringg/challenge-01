@@ -1,26 +1,14 @@
-"use client";
-import Link from "next/link";
+import { caller } from "@/lib/trpc/server";
 
-import { ModeToggle } from "./mode-toggle";
-
-export default function Header() {
-	const links = [{ to: "/", label: "Home" }];
-
+export default async function Header() {
+	const healthCheck = await caller.healthCheck();
 	return (
 		<div>
-			<div className="flex flex-row items-center justify-between px-2 py-1">
-				<nav className="flex gap-4 text-lg">
-					{links.map(({ to, label }) => {
-						return (
-							<Link key={to} href={to}>
-								{label}
-							</Link>
-						);
-					})}
-				</nav>
-				<div className="flex items-center gap-2">
-					<ModeToggle />
-				</div>
+			<div className="flex flex-row items-center gap-2 px-2 py-1">
+				<h2 className="font-medium">API Status:</h2>
+				<span className="text-muted-foreground text-sm">
+					{healthCheck ? "Connected" : "Disconnected"}
+				</span>
 			</div>
 			<hr />
 		</div>
