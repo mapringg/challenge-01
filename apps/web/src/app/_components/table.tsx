@@ -6,7 +6,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { Product } from "../../../../server/src/db/schema/products";
+import type { Product } from "@server/db/schema/products";
 
 export function ProductsTable({ products }: { products: Product[] }) {
 	return (

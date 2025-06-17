@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { ProductStats as ProductStatsType } from "../../../../server/src/db/schema/products";
+import type { ProductStats as ProductStatsType } from "@server/db/schema/products";
 
 export function ProductStats({ stats }: { stats: ProductStatsType }) {
 	return (

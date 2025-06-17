@@ -1,5 +1,7 @@
 import "server-only";
 
+import type { Context } from "@server/lib/context";
+import { type AppRouter, appRouter } from "@server/routers";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import {
@@ -7,8 +9,6 @@ import {
 	createTRPCOptionsProxy,
 } from "@trpc/tanstack-react-query";
 import { cache } from "react";
-import type { Context } from "../../../../server/src/lib/context";
-import { type AppRouter, appRouter } from "../../../../server/src/routers";
 import { makeQueryClient } from "./query-client";
 
 // IMPORTANT: Create a stable getter for the query client that
